@@ -22,7 +22,7 @@ const orderSummary = (props) => {
             <p><strong>Total price: {props.price.toFixed(2)}</strong></p>
             <p>Continue to checkout?</p>
             <Button btnType="Danger" clicked={props.cancelled}>CANCEL</Button>
-            <Button btnType="Success" clicked={props.continued}>CONTINUE</Button>
+            <Button btnType="Success" clicked={props.continued}>CHECOUT</Button>
         </Aux>
     );
 };

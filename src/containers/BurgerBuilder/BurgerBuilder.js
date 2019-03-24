@@ -27,6 +27,8 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props);
+
         axios.get('ingredients.json')
             .then(response => {
                 this.setState({ ingredients: response.data });
@@ -63,30 +65,32 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        this.setState({ loading: true });
+        // console.log(this.props);
+        // this.props.history.push('/checkout');
+        // this.setState({ loading: true });
 
-        const data = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Yuriy',
-                address: {
-                    street: 'Stryyksa',
-                    zipCode: '43443',
-                    country: 'Ukraine'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'fastest'
-        };
+        // const data = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Yuriy',
+        //         address: {
+        //             street: 'Stryyksa',
+        //             zipCode: '43443',
+        //             country: 'Ukraine'
+        //         },
+        //         email: 'test@test.com'
+        //     },
+        //     deliveryMethod: 'fastest'
+        // };
 
-        axios.post('/orders.json', data)
-            .then(response => {
-                this.setState({ loading: false, purchasing: false });
-            })
-            .catch(error => {
-                this.setState({ loading: false, purchasing: false });
-            });
+        // axios.post('/orders.json', data)
+        //     .then(response => {
+        //         this.setState({ loading: false, purchasing: false });
+        //     })
+        //     .catch(error => {
+        //         this.setState({ loading: false, purchasing: false });
+        //     });
     }
 
     addIngredientHandler = (type) => {
