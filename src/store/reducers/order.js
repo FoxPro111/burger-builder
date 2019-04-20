@@ -16,13 +16,13 @@ const purchaseBurgerFailed = (state, action) => {
         ...state,
         loading: false,
         orders: state.orders.concat(newOrder),
-        purchased: false
+        purchased: true
     };
 };
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
-        case actionTypes.PURCHASE_BURGER_INIT: return { ...state, purchased: true };
+        case actionTypes.PURCHASE_BURGER_INIT: return { ...state, purchased: false };
         case actionTypes.PURCHASE_BURGER_START: return { ...state, loading: true, };
         case actionTypes.PURCHASE_BURGER_SUCCESS: return purchaseBurgerFailed(state, action);
         case actionTypes.PURCHASE_BURGER_FAILED: return { ...state, loading: false, };
