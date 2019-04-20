@@ -8,6 +8,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
+import { updateObject, checkValidation } from '../../shared/utility';
 
 
 class Auth extends Component {
@@ -51,49 +52,17 @@ class Auth extends Component {
         }
     }
 
-    checkValidation(value, rules = {}) {
-        let isValid = true;
-
-        if (rules.required) {
-            isValid = isValid && value.trim() !== '';
-        }
-
-        if (rules.minLength) {
-            isValid = isValid && value.length >= rules.minLength;
-        }
-
-        if (rules.maxLength) {
-            isValid = isValid && value.length <= rules.maxLength;
-        }
-
-        if (rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        if (rules.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        return isValid;
-    }
-
     inputChangeHandler(event, inputID) {
-        const updatedOrderForm = {
-            ...this.state.controls,
-        }
-
-        const updatedFormElement = updatedOrderForm[inputID];
-
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.touched = true;
-        updatedFormElement.valid = this.checkValidation(updatedFormElement.value, updatedFormElement.validation);
-
-        updatedOrderForm[inputID] = updatedFormElement;
+        const updatedControls = updateObject(this.state.controls, {
+            [inputID]: updateObject(this.state.controls[inputID], {
+                value: event.target.value,
+                touched: true,
+                valid: checkValidation(event.target.value, this.state.controls[inputID].validation)
+            })
+        });
 
         this.setState({
-            orderForm: updatedOrderForm,
+            controls: updatedControls,
         });
     }
 
